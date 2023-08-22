@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BlockLevel_01
+  - BlockLevel_02
   layers:
   - Default
   - TransparentFX
@@ -30,13 +32,13 @@ TagManager:
   - 
   - 
   - 
+  - ReturnToPoolWall
+  - Wall
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Block
+  - Teeth
+  - Crusher
   m_SortingLayers:
   - name: BackgroundUI
     uniqueID: 4251551271
