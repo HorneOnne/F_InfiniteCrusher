@@ -9,4 +9,6 @@ EditorBuildSettings:
     path: Assets/InfiniteCrusher/Scenes/GameplayScene.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
   m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 173bc81097f8dad4585de0d64200ab0d, type: 2}
+    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000, guid: d8a4342880119f848b09625cafa58d6b, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: e5596fde6e3eb4449b2ef6499e7eb8f6, type: 2}
