@@ -15,14 +15,15 @@ namespace InfiniteCrusher
         public BigInteger CurrentUpgradeCost { get; private set; }
 
 
-        private const int MAX_TEETH_COUNT = 12;
+        private const int MIN_TEETH_COUNT = 2;
+        private const int MAX_TEETH_COUNT = 10;
 
-        private void Start()
+        private void Awake()
         {
             CurrentLevel = _baseTeethUpgradeData.StartLevel;
             CurrentUpgradeCost = _baseTeethUpgradeData.StartCost;
 
-            CurrentTeethCount = 4;
+            CurrentTeethCount = MIN_TEETH_COUNT;
         }
 
         public void LevelUp()

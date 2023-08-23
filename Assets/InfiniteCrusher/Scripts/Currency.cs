@@ -8,7 +8,7 @@ namespace InfiniteCrusher
         public static Currency Instance { get; private set; }
         public static event System.Action OnBalanceChanged;
        
-        public BigInteger CurrentBalance { get; set; } = 10000000000000;
+        public BigInteger CurrentBalance { get; set; } = 0;
 
         private void Awake()
         {

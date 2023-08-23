@@ -6,8 +6,6 @@ namespace InfiniteCrusher
 
     public class Block : MonoBehaviour
     {
-        public static event System.Action<int, Vector2> OnBlockDestroyed;       // Action<BlockLevel, Position>
-
         public LayerMask _teethLayer;
         public bool IsUnbreakable;
         [SerializeField] private BlockData _blockData;
@@ -25,13 +23,22 @@ namespace InfiniteCrusher
             _currentHealth = _blockData.Health;
         }
 
+        private void OnEnable()
+        {
+            _currentHealth = _blockData.Health;
+        }
+
         public void TakeDamage(int damage = 1)
         {
             _currentHealth -= damage;
 
             if (_currentHealth <= 0)
             {
-                OnBlockDestroyed?.Invoke(_blockData.BlockLevel, transform.position);
+                int blockSpawnLevel = _blockData.BlockLevel - 1;
+                BlockSpawner.Instance.SpawnBlock(blockSpawnLevel, transform.position);
+                BlockSpawner.Instance.SpawnBlock(blockSpawnLevel, transform.position);
+
+                BlockSpawner.Instance.RemoveBlockCount();
                 gameObject.SetActive(false);
             }
         }

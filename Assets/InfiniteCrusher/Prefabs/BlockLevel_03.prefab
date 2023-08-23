@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8743483730069725}
   m_Layer: 29
   m_Name: BlockLevel_03
-  m_TagString: Untagged
+  m_TagString: BlockLevel_03
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

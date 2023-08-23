@@ -11,9 +11,11 @@ namespace InfiniteCrusher
         {
             if (_blockLayer == (_blockLayer | (1 << collision.gameObject.layer)))
             {
-                collision.gameObject.SetActive(false);
-
+                BlockSpawner.Instance.RemoveBlockCount();              
                 Currency.Instance.Deposite(10);
+                ExperienceSystem.Instance.GainExperience(1);
+
+                collision.gameObject.SetActive(false);
             }
         }
     }

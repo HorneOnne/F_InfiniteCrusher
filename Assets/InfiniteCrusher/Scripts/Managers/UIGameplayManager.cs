@@ -7,6 +7,7 @@ namespace InfiniteCrusher
         public static UIGameplayManager Instance { get; private set; }
 
         public UIGameplay UIGameplay;
+        public UIReward UIReward;
   
 
 
@@ -19,11 +20,12 @@ namespace InfiniteCrusher
         private void Start()
         {
             CloseAll();
+            DisplayGameplayMenu(true);
         }
 
         public void CloseAll()
-        {          
-              
+        {
+            DisplayRewardMenu(false);
         }
 
 
@@ -32,7 +34,9 @@ namespace InfiniteCrusher
             UIGameplay.DisplayCanvas(isActive);
         }
 
-
-    
+        public void DisplayRewardMenu(bool isActive)
+        {
+            UIReward.DisplayCanvas(isActive);
+        }
     }
 }

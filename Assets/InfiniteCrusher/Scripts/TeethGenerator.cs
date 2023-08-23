@@ -37,7 +37,7 @@ namespace InfiniteCrusher
         {
             _teethSize = GameLogicHandler.Instance.ToothSizeUpgrade.CurrentSize;
             var _numOfTeeth = GameLogicHandler.Instance.TeethUpgrade.CurrentTeethCount;       
-            GenerateTeeth(_numOfTeeth);        
+            GenerateTeeth(_numOfTeeth);
         }
 
 
