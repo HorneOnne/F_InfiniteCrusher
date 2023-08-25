@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+using UnityEngine;
 
 namespace InfiniteCrusher
 {
@@ -10,6 +11,7 @@ namespace InfiniteCrusher
         [Space(20)]
         private SaveGameData _saveGameData;
 
+        private float _timer;
 
         private void Awake()
         {
@@ -65,9 +67,26 @@ namespace InfiniteCrusher
             OnLoadDataFinished?.Invoke();
         }
 
-
+        private void Update()
+        {
+            if(Time.time - _timer > 0.5f)
+            {
+                _timer = Time.time;
+                Save();
+            }
+        }
 
         private void OnApplicationQuit()
+        {
+            Save();
+        }
+
+        private void OnApplicationPause()
+        {
+            Save();
+        }
+
+        private void OnApplicationFocus()
         {
             Save();
         }
