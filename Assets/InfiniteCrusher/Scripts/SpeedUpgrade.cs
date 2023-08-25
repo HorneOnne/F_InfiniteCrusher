@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Numerics;
-using TMPro.EditorUtilities;
 
 namespace InfiniteCrusher
 {
