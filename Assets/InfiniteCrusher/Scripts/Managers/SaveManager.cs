@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq.Expressions;
+using System.Threading;
 using UnityEngine;
 
 namespace InfiniteCrusher
@@ -12,6 +13,7 @@ namespace InfiniteCrusher
         private SaveGameData _saveGameData;
 
         private float _timer;
+        private bool _isloaded = false;
 
         private void Awake()
         {
@@ -22,6 +24,7 @@ namespace InfiniteCrusher
         private void Start()
         {
             Load();
+            _isloaded = true;
         }
 
         public void Save()
@@ -42,6 +45,8 @@ namespace InfiniteCrusher
 
             _saveGameData = new SaveGameData(gameData);
             _saveGameData.SaveAllData();
+
+            Debug.Log($"Sa Balnace: {gameData.Balance.ToBigInteger()}");
         }
 
         public void Load()
@@ -52,23 +57,25 @@ namespace InfiniteCrusher
 
          
             gameData = _saveGameData.GetSaveData();
-            if(gameData.Equals(default(GameData)))
+            try
             {
-                return;
+                Currency.Instance.CurrentBalance = gameData.Balance.ToBigInteger();
+                ExperienceSystem.Instance.SetLevelInit(gameData.ExperienceData);
+                GameLogicHandler.Instance.SpeedUpgrade.LoadLevel(gameData.UpgradeSpeedLevel);
+                GameLogicHandler.Instance.TeethUpgrade.LoadLevel(gameData.UpgradeTeethLevel);
+                GameLogicHandler.Instance.ToothSizeUpgrade.LoadLevel(gameData.UpgradeToothSizeLevel);
+
+                OnLoadDataFinished?.Invoke();
             }
-
-
-            Currency.Instance.CurrentBalance = gameData.Balance.ToBigInteger();
-            ExperienceSystem.Instance.SetLevelInit(gameData.ExperienceData);
-            GameLogicHandler.Instance.SpeedUpgrade.LoadLevel(gameData.UpgradeSpeedLevel);
-            GameLogicHandler.Instance.TeethUpgrade.LoadLevel(gameData.UpgradeTeethLevel);
-            GameLogicHandler.Instance.ToothSizeUpgrade.LoadLevel(gameData.UpgradeToothSizeLevel);
-
-            OnLoadDataFinished?.Invoke();
+            catch
+            {
+                Debug.Log("No data");
+            }
         }
 
         private void Update()
         {
+            if (_isloaded == false) return;
             if(Time.time - _timer > 0.5f)
             {
                 _timer = Time.time;
@@ -77,16 +84,6 @@ namespace InfiniteCrusher
         }
 
         private void OnApplicationQuit()
-        {
-            Save();
-        }
-
-        private void OnApplicationPause()
-        {
-            Save();
-        }
-
-        private void OnApplicationFocus()
         {
             Save();
         }
