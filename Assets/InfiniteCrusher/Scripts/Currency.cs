@@ -15,12 +15,7 @@ namespace InfiniteCrusher
             Instance = this;    
         }
 
-        private void Start ()
-        {
-       
-        }
-
-
+    
         public void Deposite(BigInteger value)
         {
             CurrentBalance += value;

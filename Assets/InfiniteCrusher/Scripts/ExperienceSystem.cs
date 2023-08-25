@@ -21,6 +21,7 @@ namespace InfiniteCrusher
             Instance = this;
         }
 
+
         public void GainExperience(int amount)
         {
             if (LockExpericenGain) return;

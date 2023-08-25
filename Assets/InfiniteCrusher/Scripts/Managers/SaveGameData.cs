@@ -8,7 +8,7 @@ namespace InfiniteCrusher
     [System.Serializable]
     public class SaveGameData
     {
-        private readonly string path = Application.dataPath + "/InfiniteCrusher/Saves/GameData";
+        private readonly string path = Path.Combine(Application.persistentDataPath, "InfiniteCrusher/Saves/GameData");
         private GameData _gameData;
 
         public SaveGameData(GameData gameData)
@@ -37,22 +37,24 @@ namespace InfiniteCrusher
         {
             Directory.CreateDirectory(path);
             string jsonString = JsonUtility.ToJson(objectToSave);
-            using (StreamWriter sw = new StreamWriter($"{path}{key}.json"))
+            string filePath = Path.Combine(path, $"{key}.json");
+            using (StreamWriter sw = new StreamWriter(filePath))
             {
                 sw.Write(jsonString);
             }
 
-            Debug.Log($"Saved at path: {path}{key}.json");
+            Debug.Log($"Saved at path: {filePath}");
         }
 
         private T Load<T>(string key)
         {
             T returnValue = default(T);
-            if (File.Exists($"{path}{key}.json"))
+            string filePath = Path.Combine(path, $"{key}.json");
+            if (File.Exists(filePath))
             {
                 string jsonString = "";
                 // LOAD DATA
-                using (StreamReader sr = new StreamReader($"{path}{key}.json"))
+                using (StreamReader sr = new StreamReader(filePath))
                 {
                     jsonString = sr.ReadToEnd();
                     returnValue = JsonUtility.FromJson<T>(jsonString);

@@ -42,6 +42,19 @@ namespace InfiniteCrusher
             ExperienceSystem.OnLevelUp += UpdateExpSliderValueWhenLevelUp;
             ExperienceSystem.OnExperienceGain += UpdateExpSlider;
 
+
+            SaveManager.OnLoadDataFinished += () =>
+            {
+                LoadBalance();
+                LoadUpgardeSpeedUI();
+                LoadUpgardTeethUI();
+                LoadUpgardToothSizeUI();
+                LoadUpgardToothSizeUI();
+
+                UpdateExpSliderValueWhenLevelUp();
+                UpdateExpSlider();
+            };
+
         }
 
         private void OnDisable()
@@ -55,6 +68,18 @@ namespace InfiniteCrusher
             // Exp
             ExperienceSystem.OnLevelUp -= UpdateExpSliderValueWhenLevelUp;
             ExperienceSystem.OnExperienceGain -= UpdateExpSlider;
+
+            SaveManager.OnLoadDataFinished -= () =>
+            {
+                LoadBalance();
+                LoadUpgardeSpeedUI();
+                LoadUpgardTeethUI();
+                LoadUpgardToothSizeUI();
+                LoadUpgardToothSizeUI();
+
+                UpdateExpSliderValueWhenLevelUp();
+                UpdateExpSlider();
+            };
         }
 
         private void Start()
