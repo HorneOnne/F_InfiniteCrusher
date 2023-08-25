@@ -3056,7 +3056,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CurrentLevel>k__BackingField: 1
   <CurrentExperience>k__BackingField: 0
-  <ExperienceToLevelUp>k__BackingField: 10
+  <ExperienceToLevelUp>k__BackingField: 50
   <LockExpericenGain>k__BackingField: 0
 --- !u!4 &628297074
 Transform:
@@ -4242,7 +4242,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPosition: {fileID: 337682926}
   _spawnOffsetX: 2
-  _currentCountSize: 0
   CurrentBlockCount: 0
 --- !u!1 &1036355073
 GameObject:
