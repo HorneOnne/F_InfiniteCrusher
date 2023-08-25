@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace InfiniteCrusher
@@ -6,10 +7,13 @@ namespace InfiniteCrusher
     public class Crusher : MonoBehaviour
     {
         private Rigidbody2D _rb;
-        private float _torque = 0;
+        [SerializeField] private float _torque = 0;
         private float _maxAngularVelocity = 0;
 
         public bool IsClockWise = true;
+
+        [Header("UI")]
+        [SerializeField] private Image _speedFillImage; 
 
         private void Awake()
         {
@@ -50,6 +54,48 @@ namespace InfiniteCrusher
 
             if (IsClockWise)
                 _torque = -_torque;
+
+            LoadTorqueUI();
+        }
+
+
+        private void LoadTorqueUI()
+        {
+            float fillValue = MapValue(Mathf.Abs(_torque), 0, Mathf.Abs(_maxAngularVelocity), 0f, 1f);
+            _speedFillImage.fillAmount = fillValue;
+        }
+
+        private float MapValue(float value, float minFrom, float maxFrom, float minTo, float maxTo)
+        {
+            return Mathf.Lerp(minTo, maxTo, Mathf.InverseLerp(minFrom, maxFrom, value));
+        }
+
+        private void OnMouseDown()
+        {
+            UpdateSpeedTesting();
+        }
+
+        private void UpdateSpeedTesting()
+        {          
+            if (IsClockWise)
+            {
+                _torque -= 10;
+                _maxAngularVelocity += 10;
+
+                if (_maxAngularVelocity > GameLogicHandler.Instance.SpeedUpgrade.MaxAngularVelocity)
+                    _maxAngularVelocity = GameLogicHandler.Instance.SpeedUpgrade.MaxAngularVelocity;
+            }
+            else
+            {
+                _torque += 10;
+                _maxAngularVelocity += 10;
+
+                if (_maxAngularVelocity > GameLogicHandler.Instance.SpeedUpgrade.MaxAngularVelocity)
+                    _maxAngularVelocity = GameLogicHandler.Instance.SpeedUpgrade.MaxAngularVelocity;
+            }
+                
+
+            LoadTorqueUI();
         }
     }
 
