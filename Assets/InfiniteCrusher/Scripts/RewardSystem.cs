@@ -18,11 +18,41 @@ namespace InfiniteCrusher
             CurrentReward = _baseReward;
         }
 
-   
+
+        private void OnEnable()
+        {
+            ExperienceSystem.OnLevelUp += () =>
+            {
+                GetRewardByLevel(ExperienceSystem.Instance.CurrentLevel);
+            };
+        }
+
+        private void OnDisable()
+        {
+            ExperienceSystem.OnLevelUp -= () =>
+            {
+                GetRewardByLevel(ExperienceSystem.Instance.CurrentLevel);
+            };
+        }
+
+        private void Start()
+        {
+            GetRewardByLevel(ExperienceSystem.Instance.CurrentLevel);
+        }
 
         public void CreateNewReward()
         {
             CurrentReward = CurrentReward * _rewardMultiplier;
+            CanClaim = false;
+        }
+
+        public void GetRewardByLevel(int level)
+        {
+            CurrentReward = _baseReward;
+            for (int i = 0; i < level - 1; i++)
+            {
+                CurrentReward = CurrentReward * _rewardMultiplier;
+            }
             CanClaim = false;
         }
 

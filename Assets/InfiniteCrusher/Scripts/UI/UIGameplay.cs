@@ -141,7 +141,7 @@ namespace InfiniteCrusher
 
         private void LoadUpgardToothSizeUI()
         {
-            _upgradeToothSize.LevelText.text = GameLogicHandler.Instance.ToothSizeUpgrade.CurrenLevel.ToString();
+            _upgradeToothSize.LevelText.text = GameLogicHandler.Instance.ToothSizeUpgrade.CurrentLevel.ToString();
 
             string costString = Currency.Instance.GetCurrencyString(GameLogicHandler.Instance.ToothSizeUpgrade.CurrentUpgradeCost);
             _upgradeToothSize.CostText.text = costString;

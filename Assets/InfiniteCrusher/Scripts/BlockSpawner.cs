@@ -7,7 +7,7 @@ namespace InfiniteCrusher
     {
         public static BlockSpawner Instance { get; private set; }
 
-  
+
         [Header("References")]
         [SerializeField] private Transform _spawnPosition;
         [SerializeField] private float _spawnOffsetX;
@@ -18,7 +18,6 @@ namespace InfiniteCrusher
 
         private int _minBlockCount = 50;
         private int _maxBlockCount = 100;
-        [SerializeField] private int _currentCountSize;
 
         public int CurrentBlockCount = 0;
 
@@ -29,20 +28,10 @@ namespace InfiniteCrusher
         }
 
 
-        private void OnEnable()
-        {
-            ExperienceSystem.OnLevelUp += IncreaseCurrentCountSize;
-        }
 
-        private void OnDisable()
-        {
-            ExperienceSystem.OnLevelUp -= IncreaseCurrentCountSize;
-        }
 
         private void Start()
         {
-            _currentCountSize = _minBlockCount;
-
             for (int i = 0; i < 30; i++)
             {
                 Vector2 randomPosition = _spawnPosition.position + new Vector3(Random.Range(-_spawnOffsetX, _spawnOffsetX), 0, 0);
@@ -60,30 +49,36 @@ namespace InfiniteCrusher
 
         private void Update()
         {
-            if(Time.time - _spawnTimer > _spawnTime)
+            if (Time.time - _spawnTimer > _spawnTime)
             {
                 _spawnTimer = Time.time;
 
-                if (CurrentBlockCount < _currentCountSize)
+
+                for (int i = 0; i < 5; i++)
                 {
-                    Vector2 randomPosition = _spawnPosition.position + new Vector3(Random.Range(-_spawnOffsetX, _spawnOffsetX), 0, 0);
-                    float rate = Random.Range(0f, 1f);
-                    if (rate < 0.15f + (0.01f * ExperienceSystem.Instance.CurrentLevel))
+                    if (CurrentBlockCount < GetCurrentCountSize())
                     {
-                        SpawnBlock(3, randomPosition);
-                    }
-                    else
-                    {
-                        SpawnBlock(2, randomPosition);
+                        Vector2 randomPosition = _spawnPosition.position + new Vector3(Random.Range(-_spawnOffsetX, _spawnOffsetX), 0, 0);
+                        float rate = Random.Range(0f, 1f);
+                        if (rate < 0.15f + (0.01f * ExperienceSystem.Instance.CurrentLevel))
+                        {
+                            SpawnBlock(3, randomPosition);
+                        }
+                        else
+                        {
+                            SpawnBlock(2, randomPosition);
+                        }
                     }
                 }
-            }    
+
+
+            }
         }
 
         public void SpawnBlock(int blockLevel, Vector2 position)
         {
             GameObject block;
-            
+
 
             if (blockLevel == 1)
                 block = ObjectPooler.SharedInstance.GetPooledObject("BlockLevel_01");
@@ -101,10 +96,7 @@ namespace InfiniteCrusher
                 block.transform.position = position;
 
                 AddBlockCount();
-            }         
-
-
-            
+            }
         }
 
         public void AddBlockCount()
@@ -119,15 +111,15 @@ namespace InfiniteCrusher
                 CurrentBlockCount = 0;
         }
 
-        private void IncreaseCurrentCountSize()
+        private int GetCurrentCountSize()
         {
-            if (_currentCountSize < _maxBlockCount)
+            if (_minBlockCount + ExperienceSystem.Instance.CurrentLevel < _maxBlockCount)
             {
-                _currentCountSize++;
+                return _minBlockCount + ExperienceSystem.Instance.CurrentLevel;
             }
             else
             {
-                _currentCountSize = _maxBlockCount;
+                return _maxBlockCount;
             }
         }
     }

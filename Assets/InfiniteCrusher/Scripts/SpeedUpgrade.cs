@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Numerics;
+using TMPro.EditorUtilities;
 
 namespace InfiniteCrusher
 {
@@ -46,6 +47,14 @@ namespace InfiniteCrusher
                 MaxAngularVelocity = MAX_ANGULAR_VELOCITY;
            
             OnUpgraded?.Invoke();
+        }
+
+        public void LoadLevel(int level)
+        {
+            for(int i =0; i < level-1; i++)
+            {
+                LevelUp();
+            }
         }
     }
 

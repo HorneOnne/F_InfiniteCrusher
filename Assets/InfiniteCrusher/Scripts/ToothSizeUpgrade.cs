@@ -10,7 +10,7 @@ namespace InfiniteCrusher
         [Header("Data")]
         [SerializeField] private UpgradeData _baseToothSizeUpgradeData;
 
-        public int CurrenLevel { get; private set; }
+        public int CurrentLevel { get; private set; }
         public float CurrentSize { get; private set; }
         public BigInteger CurrentUpgradeCost { get; private set; }
 
@@ -20,7 +20,7 @@ namespace InfiniteCrusher
 
         private void Awake()
         {
-            CurrenLevel = _baseToothSizeUpgradeData.StartLevel;
+            CurrentLevel = _baseToothSizeUpgradeData.StartLevel;
             CurrentUpgradeCost = _baseToothSizeUpgradeData.StartCost;
 
             CurrentSize = MIN_SIZE;
@@ -28,7 +28,7 @@ namespace InfiniteCrusher
 
         public void LevelUp()
         {
-            CurrenLevel++;
+            CurrentLevel++;
             CurrentUpgradeCost *= 2;
 
             if (CurrentSize < MAX_SIZE)
@@ -37,6 +37,15 @@ namespace InfiniteCrusher
                 CurrentSize = MAX_SIZE;
 
             OnUpgraded?.Invoke();
+        }
+
+
+        public void LoadLevel(int level)
+        {
+            for (int i = 0; i < level - 1; i++)
+            {
+                LevelUp();
+            }
         }
     }
 }

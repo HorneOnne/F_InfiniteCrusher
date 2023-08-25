@@ -31,8 +31,7 @@ namespace InfiniteCrusher
             {
                 UIGameplayManager.Instance.DisplayRewardMenu(false);
                 Currency.Instance.Deposite(RewardSystem.Instance.CurrentReward);
-                RewardSystem.Instance.CreateNewReward();
-
+                //RewardSystem.Instance.CreateNewReward();           
                 SoundManager.Instance.PlaySound(SoundType.Button, false);
             });
         }

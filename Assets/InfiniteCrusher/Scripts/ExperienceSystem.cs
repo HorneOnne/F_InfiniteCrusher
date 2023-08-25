@@ -49,5 +49,26 @@ namespace InfiniteCrusher
         {
             return CurrentExperience >= ExperienceToLevelUp;
         }
+
+        public void SetLevelInit(ExperienceData experienceData)
+        {
+            for(int i = 0; i < experienceData.CurrentLevel - 1; i++)
+            {
+                OnLevelUp?.Invoke();
+            }
+
+            CurrentLevel = experienceData.CurrentLevel;
+            CurrentExperience = experienceData.CurrentExperience;
+            ExperienceToLevelUp = experienceData.ExperienceToLevelUp;
+        }
+    }
+
+
+    [System.Serializable]
+    public struct ExperienceData
+    {
+        public int CurrentLevel;
+        public int CurrentExperience;
+        public int ExperienceToLevelUp;
     }
 }
