@@ -11,7 +11,7 @@ namespace InfiniteCrusher
 
         [field: SerializeField] public int CurrentLevel { get;  set; } = 1;
         [field: SerializeField] public int CurrentExperience { get;  set; } = 0;
-        public int ExperienceToLevelUp { get;  set; } = 50; // Initial experience required to level up
+        public int ExperienceToLevelUp { get;  set; } = 500; // Initial experience required to level up
         [field: SerializeField] public bool LockExpericenGain { get; set; } = false;
         private float _experienceMultiplier = 1.5f; // Experience multiplier for each level
 

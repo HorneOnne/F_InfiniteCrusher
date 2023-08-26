@@ -45,8 +45,6 @@ namespace InfiniteCrusher
 
             _saveGameData = new SaveGameData(gameData);
             _saveGameData.SaveAllData();
-
-            Debug.Log($"Sa Balnace: {gameData.Balance.ToBigInteger()}");
         }
 
         public void Load()
@@ -73,18 +71,24 @@ namespace InfiniteCrusher
             }
         }
 
-        private void Update()
-        {
-            if (_isloaded == false) return;
-            if(Time.time - _timer > 0.5f)
-            {
-                _timer = Time.time;
-                Save();
-            }
-        }
+        //private void Update()
+        //{
+        //    if (_isloaded == false) return;
+        //    if(Time.time - _timer > 0.5f)
+        //    {
+        //        _timer = Time.time;
+        //        Save();
+        //    }
+        //}
 
         private void OnApplicationQuit()
         {
+            Save();
+        }
+
+        private void OnApplicationPause(bool pause)
+        {
+            if (_isloaded == false) return;
             Save();
         }
     }

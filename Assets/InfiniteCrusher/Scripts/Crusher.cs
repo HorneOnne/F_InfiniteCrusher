@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -13,7 +14,8 @@ namespace InfiniteCrusher
         public bool IsClockWise = true;
 
         [Header("UI")]
-        [SerializeField] private Image _speedFillImage; 
+        [SerializeField] private Image _speedFillImage;
+
 
         private void Awake()
         {
@@ -71,8 +73,14 @@ namespace InfiniteCrusher
         }
 
         private void OnMouseDown()
-        {
+        {          
             UpdateSpeedTesting();
+            StopAllCoroutines();
+        }
+
+        private void OnMouseUp()
+        {
+            StartCoroutine(PerformResetToSystemSpeed());
         }
 
         private void UpdateSpeedTesting()
@@ -96,6 +104,21 @@ namespace InfiniteCrusher
                 
 
             LoadTorqueUI();
+        }
+
+        private IEnumerator PerformResetToSystemSpeed()
+        {
+            yield return new WaitForSeconds(1.0f);
+
+            _torque = GameLogicHandler.Instance.SpeedUpgrade.CurrentSpeed;
+            _maxAngularVelocity = GameLogicHandler.Instance.SpeedUpgrade.MaxAngularVelocity;
+
+            if (IsClockWise)
+                _torque = -_torque;
+
+            LoadTorqueUI();
+
+            Debug.Log("AA");
         }
     }
 
